@@ -1,3 +1,5 @@
+from turingMachine import TuringMachine
+
 numFitas = input()
 numEstados, tamAlfEntrada, tamAlfFita, numTransicoes = [int(i.strip()) for i in input().strip().split(' ')]
 estados = input()
