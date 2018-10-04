@@ -1,25 +1,26 @@
 from turingMachine import TuringMachine
+from fita import Fita
 
-numFitas = input()
+#Leitura do arquivo:
+numFitas = int(input())
 numEstados, tamAlfEntrada, tamAlfFita, numTransicoes = [int(i.strip()) for i in input().strip().split(' ')]
-estados = input()
+estados = input().strip().split(' ')
+estadoInicial = estados[0]
+estadoFinal = estados[numEstados-1]
 alfEntrada = input()
 alfFita = input()
-
 transicoes = []
 
 for i in range(numTransicoes):
     transicoes.append(input())
 
-entrada = input()
+#Le as entradas e cria as Fitas
+fitasEntrada = []
 
-print(numFitas)
-print(numEstados)
-print(tamAlfEntrada)
-print(tamAlfFita)
-print(numTransicoes)
-print(estados) #pegar o final e o inicial como o último e o primeiro
-print(alfEntrada)
-print(alfFita)
-print(transicoes)
-print(entrada)
+for i in range(numFitas):
+    linha = input()
+    fitasEntrada += [linha[:len(linha)]]
+
+#Inicio Máquina de Turing
+mt = TuringMachine(numFitas, estados, alfEntrada, alfFita, transicoes, estadoInicial, estadoFinal)
+mt.run(fitasEntrada)

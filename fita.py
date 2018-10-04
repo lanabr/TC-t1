@@ -1,4 +1,5 @@
 class Fita:
+
     #Define a fita: sequencia de simbolos, posição na fita onde o cabeçote aponta
     def __init__(self, fita = [], branco = ' '):
         self.fita = [branco]
@@ -15,6 +16,16 @@ class Fita:
 
     def movDireita(self):
         self.posicao += 1
+        if self.posicao == len(self.fita): #Se atingiu o fim da Fita
+            self.fita += [self.branco]
 
     def movEsquerda():
-        self.posicao -= 1
+        if self.posicao > 0:
+            self.posicao -= 1
+
+    def __str__(self):
+        f = ''.join(self.fita)
+        #Enquanto tem simbolos branco no fim da fita os apaga
+        while(len(f) > 0 and f[len(f) - 1] == self.branco):
+            f = f[:len(f)-1]
+        return f
