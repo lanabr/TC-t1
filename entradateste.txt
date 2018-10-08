@@ -1,0 +1,14 @@
+3
+5 3 4 8
+1 2 3 4 5
+a b c
+a b c E
+(1,aEE)=(1,aaE,RRS)
+(1,bEE)=(2,bEb,RSR)
+(2,bEE)=(2,bEb,RSR)
+(2,cEE)=(3,cEE,SLL)
+(3,cab)=(3,cab,RLL)
+(3,EEE)=(4,EEE,SSR)
+(1,EEE)=(5,EEE,SLS)
+(5,EEE)=(4,EEE,SSS)
+aabbcc

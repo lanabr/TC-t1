@@ -14,13 +14,8 @@ transicoes = []
 for i in range(numTransicoes):
     transicoes.append(input())
 
-#Le as entradas e cria as Fitas
-fitasEntrada = []
-
-for i in range(numFitas):
-    linha = input()
-    fitasEntrada += [linha[:len(linha)]]
-
+#Le a entrada w
+w = input()
 #Inicio Máquina de Turing
 mt = TuringMachine(numFitas, estados, alfEntrada, alfFita, transicoes, estadoInicial, estadoFinal)
-mt.run(fitasEntrada)
+mt.run(w)
