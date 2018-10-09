@@ -39,6 +39,7 @@ class TuringMachine:
 
         #Verifica a fita de entrada:
         for s in w:
+            # if s not in self.alfFita:
             if self.alfFita.count(s) == 0:
                 self.estadoAtual = 'entrada invalida'
                 self.mostraSaida()
@@ -47,9 +48,10 @@ class TuringMachine:
         #Execução das transições fazendo as marcações:
         #AQUI FAZER ##################################
         while self.estadoAtual != self.estadoFinal:
-            for t in self.transicoes[self.estadoAtual]:
-                
-
+            # FIXME: o estado atual não pode ser uma string
+            for t in self.transicoes[int(self.estadoAtual)]:
+                pass
+        
         self.mostraSaida()
 
     def mostraSaida(self):
@@ -71,3 +73,4 @@ class TuringMachine:
         self.fitas = []
         for i in range(self.numFitas):
             self.fitas += [Fita(branco = self.alfFita[len(self.alfFita) - 1])]
+            # self.fitas.append(Fita(branco = self.alfFita[-1]))
