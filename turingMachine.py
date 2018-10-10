@@ -1,7 +1,6 @@
 from fita import Fita
 
 class TuringMachine:
-
     def __init__(self, numFitas, estados, alfEntrada, alfFita, transicoes, estadoInicial, estadoFinal):
         # print("Iniciei uma MT")
         # print(numFitas)
@@ -15,6 +14,7 @@ class TuringMachine:
         self.alfEntrada = alfEntrada
         self.alfFita = alfFita
         self.transicoes  = transicoes
+        self.traduzTransicao()
         self.estadoInicial = estadoInicial
         self.estadoFinal = estadoFinal
         self.estadoAtual = estadoInicial
@@ -51,7 +51,8 @@ class TuringMachine:
             # FIXME: o estado atual não pode ser uma string
             for t in self.transicoes[int(self.estadoAtual)]:
                 pass
-        
+
+
         self.mostraSaida()
 
     def mostraSaida(self):
@@ -74,3 +75,14 @@ class TuringMachine:
         for i in range(self.numFitas):
             self.fitas += [Fita(branco = self.alfFita[len(self.alfFita) - 1])]
             # self.fitas.append(Fita(branco = self.alfFita[-1]))
+        
+    def traduzTransicao(self):
+        transEntrada = [] 
+        transSaida = []
+        #Transforma as transições de "(0,#)=(3,#,D)" para ["0", "#"] e ["3", "#", "D"]
+        for t in self.transicoes:
+            Entrada, Saida = t.split("=")
+            Entrada = Entrada.strip("()").split(",")
+            Saida = Saida.strip("()").split(",")
+            transEntrada.append(Entrada)
+            transSaida.append(Saida)
