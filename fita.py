@@ -22,6 +22,12 @@ class Fita:
     def movEsquerda(self):
         if self.posicao > 0:
             self.posicao -= 1
+    
+    def naoBranco(self):
+        if self.fita[self.posicao] == self.branco:
+            return False
+        else:
+            return True
 
     def __str__(self):
         f = ''.join(self.fita)

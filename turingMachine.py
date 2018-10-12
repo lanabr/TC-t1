@@ -4,13 +4,13 @@ class TuringMachine:
     transEntrada = [] 
     transSaida = []
     def __init__(self, numFitas, estados, alfEntrada, alfFita, transicoes, estadoInicial, estadoFinal):
-        # print("Iniciei uma MT")
-        # print(numFitas)
-        # print(estadoInicial)
-        # print(estadoFinal)
-        # print(alfEntrada)
-        # print(alfFita)
-        # print(transicoes)
+        print("Iniciei uma MT")
+        print(numFitas)
+        print(estadoInicial)
+        print(estadoFinal)
+        print(alfEntrada)
+        print(alfFita)
+        print(transicoes)
         self.numFitas = numFitas
         self.estados = estados
         self.alfEntrada = alfEntrada
@@ -49,32 +49,34 @@ class TuringMachine:
 
         #Execução das transições fazendo as marcações:
         #AQUI FAZER ##################################
-        
-        while self.estadoAtual != self.estadoFinal:
-    
-            for d, i in enumerate(self.transEntrada):
-                if(i[0] == self.estadoAtual):
-                    valida = True
-                    for c, f in enumerate(self.fitas):
-                        if (f.lerFita() == i[1][c]):
-                            pass
-                        else:
-                            valida = False
-                    if(valida == True):
-                        print("validou: ", i )
-                        self.estadoAtual = self.transSaida[d][0]
-                        print("estado atual: ", self.estadoAtual)
-                        for e, f in enumerate(self.fitas):
-                            f.escreverFita(self.transSaida[d][1][e])
-                            if(self.transSaida[d][2][e] == 'R'):
-                                f.movDireita()
-                            if(self.transSaida[d][2][e] == 'L'):
-                                f.movEsquerda()
-                            print("escreveu: ", f.lerFita(), "na fita", e)
-                if(valida == True):
-                    break
 
-                    
+        valida = True
+        #procurando a transição correta
+        for d, i in enumerate(self.transEntrada):
+            #se o estadoAtual é igual ao estado da transição
+            if(i[0] == self.estadoAtual):
+                #para cada fita verifica se os simbolos são os da transição
+                for c, f in enumerate(self.fitas):
+                    #se algum for diferente, não é a transição correta
+                    if (f.lerFita() != i[1][c]):
+                        valida = False
+                #se a transição correta foi encontrada
+                if(valida == True):
+                    #o novo estado é o estado da transição
+                    self.estadoAtual = self.transSaida[d][0]
+                    #pra cada fita, escreve por cima da posição do cabeçote, e move(ou n)
+                    for e, f in enumerate(self.fitas):
+                        f.escreverFita(self.transSaida[d][1][e])
+                        if(self.transSaida[d][2][e] in ['R','D']):
+                            f.movDireita()
+                        elif(self.transSaida[d][2][e] in ['L', 'E'] ):
+                            f.movEsquerda()
+            #se a transição ocorreu, para o laço que procura transição
+            if(valida == True):
+                break
+        for i in range(self.numFitas):
+            print("Fita %d antes:" % i)
+            print(self.fitas[i])
 
 
                         
@@ -104,20 +106,9 @@ class TuringMachine:
             # self.fitas.append(Fita(branco = self.alfFita[-1]))
         
     def traduzTransicao(self):
-        #Transforma as transições de "(0,#)=(3,#,D)" para ["1", "aEE"] e ["3", "#", "D"]
-        # 0 = estado origem;
-        # # = o que está na fita;
-        # 3 = estado destino;
-        # # = o que será escrito;
-        # D = para onde se movimenta o cabeçote ;
         for t in self.transicoes:
             Entrada, Saida = t.split("=")
             Entrada = Entrada.strip("()").split(",")
             Saida = Saida.strip("()").split(",")
             self.transEntrada.append(Entrada)
             self.transSaida.append(Saida)
-        #print("\n\ntransEntrada: ")
-        #print(transEntrada)
-        #print("\ntransSaída")
-        #print(transSaida)
-        #print("\n\n")
