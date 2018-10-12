@@ -1,6 +1,8 @@
 from fita import Fita
 
 class TuringMachine:
+    transEntrada = [] 
+    transSaida = []
     def __init__(self, numFitas, estados, alfEntrada, alfFita, transicoes, estadoInicial, estadoFinal):
         # print("Iniciei uma MT")
         # print(numFitas)
@@ -47,10 +49,35 @@ class TuringMachine:
 
         #Execução das transições fazendo as marcações:
         #AQUI FAZER ##################################
+        
         while self.estadoAtual != self.estadoFinal:
-            # FIXME: o estado atual não pode ser uma string
-            for t in self.transicoes[int(self.estadoAtual)]:
-                pass
+    
+            for d, i in enumerate(self.transEntrada):
+                if(i[0] == self.estadoAtual):
+                    valida = True
+                    for c, f in enumerate(self.fitas):
+                        if (f.lerFita() == i[1][c]):
+                            pass
+                        else:
+                            valida = False
+                    if(valida == True):
+                        print("validou: ", i )
+                        self.estadoAtual = self.transSaida[d][0]
+                        print("estado atual: ", self.estadoAtual)
+                        for e, f in enumerate(self.fitas):
+                            f.escreverFita(self.transSaida[d][1][e])
+                            if(self.transSaida[d][2][e] == 'R'):
+                                f.movDireita()
+                            if(self.transSaida[d][2][e] == 'L'):
+                                f.movEsquerda()
+                            print("escreveu: ", f.lerFita(), "na fita", e)
+                if(valida == True):
+                    break
+
+                    
+
+
+                        
 
 
         self.mostraSaida()
@@ -77,12 +104,20 @@ class TuringMachine:
             # self.fitas.append(Fita(branco = self.alfFita[-1]))
         
     def traduzTransicao(self):
-        transEntrada = [] 
-        transSaida = []
-        #Transforma as transições de "(0,#)=(3,#,D)" para ["0", "#"] e ["3", "#", "D"]
+        #Transforma as transições de "(0,#)=(3,#,D)" para ["1", "aEE"] e ["3", "#", "D"]
+        # 0 = estado origem;
+        # # = o que está na fita;
+        # 3 = estado destino;
+        # # = o que será escrito;
+        # D = para onde se movimenta o cabeçote ;
         for t in self.transicoes:
             Entrada, Saida = t.split("=")
             Entrada = Entrada.strip("()").split(",")
             Saida = Saida.strip("()").split(",")
-            transEntrada.append(Entrada)
-            transSaida.append(Saida)
+            self.transEntrada.append(Entrada)
+            self.transSaida.append(Saida)
+        #print("\n\ntransEntrada: ")
+        #print(transEntrada)
+        #print("\ntransSaída")
+        #print(transSaida)
+        #print("\n\n")

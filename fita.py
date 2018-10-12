@@ -19,7 +19,7 @@ class Fita:
         if self.posicao == len(self.fita): #Se atingiu o fim da Fita
             self.fita += [self.branco]
 
-    def movEsquerda():
+    def movEsquerda(self):
         if self.posicao > 0:
             self.posicao -= 1
 
