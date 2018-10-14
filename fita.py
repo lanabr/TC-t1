@@ -13,21 +13,17 @@ class Fita:
     #Escrita na fita: escreve no local onde o cabeçote aponta
     def escreverFita(self, char):
         self.fita[self.posicao] = char
-
+    
+    #Movimentação do cabeçote para a direita
     def movDireita(self):
         self.posicao += 1
         if self.posicao == len(self.fita): #Se atingiu o fim da Fita
             self.fita += [self.branco]
 
+    #Movimentação do cabeçote para a direita
     def movEsquerda(self):
         if self.posicao > 0:
             self.posicao -= 1
-
-    def naoBranco(self):
-        if self.fita[self.posicao] == self.branco:
-            return False
-        else:
-            return True
 
     def __str__(self):
         f = ''.join(self.fita)

@@ -1,17 +1,22 @@
 from fita import Fita
 import sys
 
+
 class TuringMachine:
+    #transições 
     transEntrada = []
     transSaida = []
+
+    #Inicia uma MT
     def __init__(self, numFitas, numTransicoes, estados, alfEntrada, alfFita, transicoes, estadoInicial, estadoFinal):
-        print("Iniciei uma MT")
-        print(numFitas)
-        print(estadoInicial)
-        print(estadoFinal)
-        print(alfEntrada)
-        print(alfFita)
-        print(transicoes)
+        print("Iniciei uma MT:\n")
+        print("Numero de fitas = ", numFitas)
+        print("Estado inicial = ", estadoInicial)
+        print("Estado final = ", estadoFinal)
+        print("Alfabeto de entrada = ", alfEntrada)
+        print("Alfabeto da fita = ", alfFita)
+        print("Transições = ", transicoes)
+        print("\n\n")
         self.numFitas = numFitas
         self.numTransicoes = numTransicoes
         self.estados = estados
@@ -23,10 +28,10 @@ class TuringMachine:
         self.estadoFinal = estadoFinal
         self.estadoAtual = estadoInicial
 
+    #Executa uma MT
     def run(self, w):
-        print("Entrada W:")
-        print(w)
-
+        print("Entrada W =", w)
+        
         #Ajusta a nova fita criando Nfitas em branco
         self.limpaFita()
         #Escreve a entrada na primeira fita
@@ -35,60 +40,54 @@ class TuringMachine:
             self.fitas[0].movDireita()
 
         for i in range(self.numFitas):
-            print("Fita %d antes:" % i)
-            print(self.fitas[i])
-
+            print("Fita %d antes =" % i, self.fitas[i])
+        
+        #Setando o cabeçote e o estado inicial
         self.fitas[0].posicao = 0
         self.posicao = self.estadoInicial
 
-        #Verifica a fita de entrada:
+        #Verifica se a fita de entrada é válida:
         for s in w:
-            # if s not in self.alfFita:
+            # Se s não estiver no alfabeto da fita:
             if self.alfFita.count(s) == 0:
                 self.estadoAtual = 'entrada invalida'
                 self.mostraSaida()
                 return
 
-        #Mostra as transições
-        # for i in range(self.numTransicoes):
-        #     print(self.transicoes[i])
-
-        # print("Transicao de entrada:")
-        # print(self.transEntrada)
-        #
-        # print("Transicao de saída:")
-        # print(self.transSaida)
-
         c = 0
-
-        while (c < len(w)): #percorre toda a entrada simbolo a simbolo
+        #percorre toda a entrada simbolo a simbolo
+        while (c < len(w)):
             achou = False
-            print("\nsimbolo: %s" % c)
+            #print("\nsimbolo: %s" % c)
             #Para o simbolo atual, verifica se alguma transição a satisfaz considerando o estado atual da fita e a posição dos cabeçotes
             for d in range(self.numTransicoes):
                 if(achou):#se já achou uma transição sai do for
                     break
                 valida = True
-                print("Estado atual: %s \nTransição: %s %s" % (self.estadoAtual, self.transEntrada[d], self.transSaida[d]))
+                print("\nTransição: %s %s \nEstado atual: %s " % (self.transEntrada[d], self.transSaida[d], self.estadoAtual))
                 if(self.transEntrada[d][0] == self.estadoAtual): #Se o estado atual é o mesmo estado da proxima transição, verifica ela
                     for c, f in enumerate(self.fitas): #Para todas as fitas
+                        print("fita", c, "=",f.lerFita())
                         if(f.lerFita() != self.transEntrada[d][1][c]): #Se o simbolo lido na transição é diferente do simbolo da fita, vai pra proxima transição
-                            print("%s != %s" % (f.lerFita(), self.transEntrada[d][1][c]))
+                            print("transicao errada!")
                             valida = False
                             break
-                        else:
-                            print("%s == %s" % (f.lerFita(), self.transEntrada[d][1][c]))
-
+                    #Se encontra transição
                     if(valida == True):
+                        print("encontrou transicao valida!")
                         achou = True
+                        #Estado atual é atualizado
                         self.estadoAtual = self.transSaida[d][0]
-                        print("Estado novo: %s" % self.estadoAtual)
+                        print("\n\nEstado novo: %s" % self.estadoAtual)
+                        #As fitas são atualizadas e o cabeçote é movido
                         for e, f in enumerate(self.fitas):
                             f.escreverFita(self.transSaida[d][1][e])
                             if(self.transSaida[d][2][e] in ['R','D']):
                                 f.movDireita()
                             elif(self.transSaida[d][2][e] in ['L', 'E'] ):
                                 f.movEsquerda()
+                else:
+                    print("transição errada!")
                                 
             #Não achou nenhuma transição para seguir com os simbolos atuais no estado atual. Rejeita
             if((achou == False) & (self.estadoAtual != self.estadoFinal)):
@@ -101,9 +100,9 @@ class TuringMachine:
 
     def mostraSaida(self):
 
-        print("Fitas após marcações:")
+        print("\nFitas após marcações:")
         for i in range(self.numFitas):
-            print(self.fitas[i])
+            print("Fita %d =" % i, self.fitas[i])
 
         if self.estadoAtual == 'entrada invalida':
             print("Rejeita")
