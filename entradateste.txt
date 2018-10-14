@@ -1,6 +1,6 @@
 3
-5 3 4 8
-1 2 3 4 5
+4 3 4 8
+1 2 3 4
 a b c
 a b c E
 (1,aEE)=(1,aaE,RRS)
@@ -11,4 +11,4 @@ a b c E
 (3,EEE)=(4,EEE,SSR)
 (1,EEE)=(5,EEE,SLS)
 (5,EEE)=(4,EEE,SSS)
-aabbcc
+abc

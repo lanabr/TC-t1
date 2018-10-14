@@ -17,5 +17,5 @@ for i in range(numTransicoes):
 #Le a entrada w
 w = input()
 #Inicio Máquina de Turing
-mt = TuringMachine(numFitas, estados, alfEntrada, alfFita, transicoes, estadoInicial, estadoFinal)
+mt = TuringMachine(numFitas, numTransicoes, estados, alfEntrada, alfFita, transicoes, estadoInicial, estadoFinal)
 mt.run(w)
