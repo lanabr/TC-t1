@@ -49,8 +49,9 @@ class TuringMachine:
                 self.mostraSaida()
                 return
 
-        for i in range(self.numTransicoes):
-            print(self.transicoes[i])
+        #Mostra as transições
+        # for i in range(self.numTransicoes):
+        #     print(self.transicoes[i])
 
         # print("Transicao de entrada:")
         # print(self.transEntrada)
@@ -59,7 +60,7 @@ class TuringMachine:
         # print(self.transSaida)
 
         c = 0
-        
+
         while (c < len(w)): #percorre toda a entrada simbolo a simbolo
             achou = False
             print("\nsimbolo: %s" % c)
@@ -88,6 +89,12 @@ class TuringMachine:
                                 f.movDireita()
                             elif(self.transSaida[d][2][e] in ['L', 'E'] ):
                                 f.movEsquerda()
+                                
+            #Não achou nenhuma transição para seguir com os simbolos atuais no estado atual. Rejeita
+            if((achou == False) & (self.estadoAtual != self.estadoFinal)):
+                self.estadoAtual = 'entrada invalida'
+                self.mostraSaida()
+                return
             c+=1
 
         self.mostraSaida()
@@ -97,6 +104,10 @@ class TuringMachine:
         print("Fitas após marcações:")
         for i in range(self.numFitas):
             print(self.fitas[i])
+
+        if self.estadoAtual == 'entrada invalida':
+            print("Rejeita")
+            return
 
         if self.estadoAtual == self.estadoFinal:
             print("Aceita")
