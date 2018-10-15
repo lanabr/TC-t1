@@ -56,7 +56,7 @@ class TuringMachine:
 
         c = 0
         #percorre toda a entrada simbolo a simbolo
-        while (c < len(w)):
+        while (self.estadoAtual != self.estadoFinal):
             achou = False
             #print("\nsimbolo: %s" % c)
             #Para o simbolo atual, verifica se alguma transição a satisfaz considerando o estado atual da fita e a posição dos cabeçotes
@@ -95,6 +95,8 @@ class TuringMachine:
                 self.mostraSaida()
                 return
             c+=1
+            if c == 50:
+                break
 
         self.mostraSaida()
 
