@@ -24,6 +24,8 @@ class Fita:
     def movEsquerda(self):
         if self.posicao > 0:
             self.posicao -= 1
+        else:
+            self.fita.insert(0, "E")
 
     def __str__(self):
         f = ''.join(self.fita)
